@@ -41,3 +41,26 @@ ROWS=[
 ("Scams and financial decisions","Advanced","🔐","Pause before high-pressure promises and verify people independently.",[("Red flags","Guaranteed high return with little risk","Urgent pitch"),("Verification","Look up registration and official contacts","Investor.gov search"),("Security","Protect identity and access","Strong unique credentials")],"A social-media pitch promising risk-free returns is a reason to stop and verify.","Does a polished testimonial prove a product is safe?","No. Testimonials can be fake and do not establish investment merit.","Check one claim and the seller through official tools.",["SEC fraud","CFPB credit reports"],["Pause","Verify","Protect","Decide"]),
 ]
 LESSONS=[dict(zip(("title","level","icon","takeaway","concepts","example","question","answer","action","sources","visual"),row)) for row in ROWS]
+
+# Cheatsheet fields per lesson: a real metric or rule of thumb, and a topic-specific mistake to avoid.
+CHEATSHEET={
+"Money map and goals":("Goal amount ÷ months until needed = monthly saving","Pick an investment before naming what the money is for"),
+"Income and cash flow":("Take-home income − total outflows","Budget from gross salary instead of take-home pay"),
+"Spending and budgeting":("Annual irregular bills ÷ 12 = monthly set-aside","Leave annual and seasonal bills out of the monthly plan"),
+"Emergency fund and cash safety":("Liquid cash ÷ essential monthly costs = months covered","Keep emergency money in volatile or locked-up investments"),
+"Assets, liabilities and net worth":("Assets − liabilities = net worth","Count home equity as spendable cash"),
+"Credit reports and scores":("On-time payments and low utilization (balance ÷ limit)","Ignore errors on your credit report"),
+"Debt, interest and payoff":("Balance × APR ÷ 12 ≈ first month's interest","Pay only minimums on high-APR debt without a payoff plan"),
+"Housing and major purchases":("Total monthly cost = payment + tax + insurance + upkeep","Judge affordability by the loan payment alone"),
+"Investing foundations":("Expected return rises with risk; time horizon sets risk capacity","Chase last year's best performer"),
+"Funds, diversification and allocation":("Allocation % = asset class value ÷ total portfolio","Assume one sector fund is diversified"),
+"Stocks and employer equity":("Holding ÷ total investable assets × 100%","Let employer stock grow into most of your wealth"),
+"Fees, compounding and inflation":("Invested amount × expense ratio = annual cost","Ignore a 1% fee because it looks small"),
+"Retirement and account types":("Contribution needed to receive the full employer match","Assume last year's contribution limits still apply"),
+"Taxes, withholding and records":("Refund or balance due = tax withheld − tax owed","Treat a big refund as free money"),
+"Insurance and risk protection":("Premium vs deductible vs coverage limit","Compare policies on premium alone"),
+"Estate and household continuity":("Up-to-date account inventory + beneficiary check","Store passwords in an open spreadsheet"),
+"Scams and financial decisions":("Guaranteed high return + urgency = red flag","Act on an urgent pitch before verifying the seller"),
+}
+for _lesson in LESSONS:
+    _lesson["metric"],_lesson["dont"]=CHEATSHEET[_lesson["title"]]
