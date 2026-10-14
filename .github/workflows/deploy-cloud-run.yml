@@ -1,0 +1,35 @@
+name: deploy to Cloud Run
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-cloud-run
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    # Skipped until the GCP repository variables are set (see README).
+    if: ${{ vars.GCP_PROJECT_ID != '' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt pytest
+      - run: python -m pytest -q
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ vars.GCP_SERVICE_ACCOUNT }}
+      - uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: finance-faqs
+          region: ${{ vars.GCP_REGION }}
+          source: ./
+          flags: --allow-unauthenticated --timeout=3600 --session-affinity --min-instances=0 --max-instances=2 --memory=512Mi
